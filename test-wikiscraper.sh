@@ -16,7 +16,7 @@ import locale
 import os
 import subprocess
 import sys
-
+ 
 # compile test script and wikiscraper for files with cmake;
 subprocess.run(["sh", "-c", "cd build; ./build-test.sh; cd .."], capture_output=False,
                 timeout=10, encoding=locale.getpreferredencoding())

@@ -25,15 +25,16 @@ using std::unordered_map;   using std::unordered_set;
 
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 // BEGIN STUDENT CODE HERE
-bool valid_wikilink(const string& link) {
+bool valid_wikilink(const string &link){
     // replace these lines!
-    (void) link;
-    throw std::invalid_argument("Not implemented yet.\n");
+    return std::all_of(link.begin(), link.end(), [](char c)
+                       { return c != ':' && c!= '#';});
 }
 // END STUDENT CODE HERE
 ///////////////////////////////////////////////////////////////////////////////////////////////////
 
-unordered_set<string> findWikiLinks(const string& inp) {
+unordered_set<string> findWikiLinks(const string &inp)
+{
     /* Delimiter for start of a link  */
     static const string delim = "href=\"/wiki/";
 
@@ -52,8 +53,10 @@ unordered_set<string> findWikiLinks(const string& inp) {
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         // BEGIN STUDENT CODE HERE
-        // Please delete this line when you start working!
-        throw std::invalid_argument("Not implemented yet.\n");
+        url_start = std::search(url_start, end, delim.begin(), delim.end());
+        if (url_start == end) {
+            break;
+        }
         // END STUDENT CODE HERE
         ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -66,7 +69,7 @@ unordered_set<string> findWikiLinks(const string& inp) {
 
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         // BEGIN STUDENT CODE HERE (delete/edit this line)
-        auto url_end = url_start;
+        auto url_end = std::find(url_start + delim.length(), end, '\"');
         // END STUDENT CODE HERE
         ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -77,7 +80,7 @@ unordered_set<string> findWikiLinks(const string& inp) {
         
         ///////////////////////////////////////////////////////////////////////////////////////////////////
         // BEGIN STUDENT CODE HERE (delete/edit this line)
-        string link;
+        string link = string(url_start + delim.length(), url_end);
         // END STUDENT CODE HERE
         ///////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -93,9 +96,7 @@ unordered_set<string> findWikiLinks(const string& inp) {
 
     }
     return ret;
-
 }
-
 
 /*
  * ==================================================================================
